@@ -36,10 +36,83 @@ app.post('/start', (request, response) => {
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
   // NOTE: Do something here to generate your move
+  console.error("in move")
+  const c = request.body;
+  const board = c.board;
+  const snakes = c.snakes;
+  const yourBody = c.you.body;
+  const yourHead = c.you.body[0];
+
+  const boardLength = board.height;
+  const boardWidth = board.width;
+
+  console.error(boardLength);
+  console.error(boardWidth);
+  console.log(yourHead);
+  console.log(yourHead.x);
+  console.log(yourHead.y);
+  myNeighbours = neighbours(yourHead);
+  console.error(myNeighbours);
+
+  // if (yourBody[0].x <= 0 || yourBody[0].y <= 0) {
+    
+  // }
+
+  function neighbours (yourHead)  {
+    var neighbours = Array();
+    if (yourHead.x > 0)  {
+      neighbours.push([yourHead.x-1, yourHead.y]);
+    }
+    if (yourHead.x < boardWidth)  {
+      neighbours.push([yourHead.x+1, yourHead.y]);
+    }
+    if (yourHead.y > 0)  {
+      neighbours.push([yourHead.x, yourHead.y-1]);
+    }
+    if (yourHead.x < boardWidth)  {
+      neighbours.push([yourHead.x, yourHead.y+1]);
+      console.error("if4");
+      // REQUIRED - DO NOT TOUCH CONSOLE
+    }
+
+    neighbours.forEach(function (neighbour)   {
+
+      if (yourBody[1].x== neighbour[0] && yourBody[1].y == neighbour[1]) {
+        neighbours.pop(neighbour);
+        console.error("removing body from neighbours")
+      }
+    });
+    
+
+    return neighbours;
+  }
+
+  function direction (fromCell, neighbour)  {
+    dx = neighbour[0] - fromCell.x;
+    dy = neighbour[1] - fromCell.y;
+
+    if (dx == 1)  {
+      return 'right';
+    }
+    if (dx == -1) {
+      return 'left';
+    }
+    if (dy == 1)  {
+      return 'down';
+    }
+    if (dy == -1) {
+      return 'up';
+    }
+
+  }
 
   // Response data
+  var number = Math.random() * (neighbours(yourHead)) + 0;
+  var thisDirection = direction(yourHead, myNeighbours[number])
+  console.error("this direction");
+  console.error(thisDirection)
   const data = {
-    move: 'up', // one of: ['up','down','left','right']
+    move: thisDirection, // one of: ['up','down','left','right']
   }
 
   return response.json(data)

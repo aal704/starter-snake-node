@@ -14,8 +14,8 @@ const fallbackHandler = (req, res, next) => {
   if (req.baseUrl === '') {
     res.status(200)
     return res.send(`
-      Battlesnake documentation can be found at
-       <a href="https://docs.battlesnake.io">https://docs.battlesnake.io</a>.
+      Check out my 
+       <a href="http://github.com/aal704">Github</a>!
     `)
   }
 
