@@ -39,7 +39,6 @@ app.post('/move', (request, response) => {
   console.error("in move")
   const c = request.body;
   const board = c.board;
-  const snakes = c.snakes;
   const yourBody = c.you.body;
   const yourHead = c.you.body[0];
 
@@ -107,8 +106,7 @@ app.post('/move', (request, response) => {
   }
 
   // Response data
-  var number = Math.random() * (neighbours(yourHead)) + 0;
-  var thisDirection = direction(yourHead, myNeighbours[number])
+  var thisDirection = direction(yourHead, myNeighbours[0])
   console.error("this direction");
   console.error(thisDirection)
   const data = {
@@ -116,6 +114,7 @@ app.post('/move', (request, response) => {
   }
 
   return response.json(data)
+  
 })
 
 app.post('/end', (request, response) => {
